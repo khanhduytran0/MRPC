@@ -11,24 +11,20 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.util.Map;
-import java.util.zip.DataFormatException;
-import java.util.zip.Deflater;
-import java.util.zip.Inflater;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
@@ -47,7 +43,8 @@ public class MainActivity extends Activity
     private WebView webView;
     private TextView textviewLog;
     private Button buttonConnect, buttonSetActivity;
-    private EditText editActivityName;
+    private EditText editActivityName, editActivityState, editActivityDetails;
+    private ImageButton imageIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -95,6 +92,9 @@ public class MainActivity extends Activity
         buttonSetActivity = (Button) findViewById(R.id.buttonSetActivity);
         buttonSetActivity.setEnabled(false);
         editActivityName = (EditText) findViewById(R.id.editActivityName);
+        editActivityState = (EditText) findViewById(R.id.editActivityState);
+        editActivityDetails = (EditText) findViewById(R.id.editActivityDetails);
+        imageIcon = (ImageButton) findViewById(R.id.imageIcon);
         heartbeatThr = new Thread(heartbeatRunnable);
     }
     /*
@@ -126,7 +126,15 @@ public class MainActivity extends Activity
         } else {
             ArrayMap<String, Object> activity = new ArrayMap<>();
             activity.put("name", editActivityName.getText().toString());
+            activity.put("state", editActivityState.getText().toString());
+            activity.put("details", editActivityDetails.getText().toString());
             activity.put("type", 0);
+            
+            // activity.put("application_id", "567994086452363286");
+            ArrayMap<String, Object> button = new ArrayMap<>();
+            button.put("label", "Open GitHub");
+            button.put("url", "https://github.com");
+            // activity.put("buttons", new Object[]{button});
 
             ArrayMap<String, Object> timestamps = new ArrayMap<>();
             timestamps.put("start", current);

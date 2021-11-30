@@ -24,11 +24,35 @@
 			android:onClick="connect"
 			android:id="@+id/buttonConnect"/>
 
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:orientation="horizontal">
+
+			<ImageButton
+				android:layout_height="40dp"
+				android:layout_width="40dp"
+				android:id="@+id/imageIcon"/>
+
+			<EditText
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:hint="Activity name (leave empty to unset)"
+				android:id="@+id/editActivityName"/>
+
+		</LinearLayout>
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/editActivityState"
+            android:hint="Activity state"/>
+
 		<EditText
 			android:layout_height="wrap_content"
 			android:layout_width="match_parent"
-			android:hint="Activity name (leave empty to unset)"
-			android:id="@+id/editActivityName"/>
+			android:id="@+id/editActivityDetails"
+			android:hint="Activity details"/>
 
 		<Button
 			android:layout_height="wrap_content"
