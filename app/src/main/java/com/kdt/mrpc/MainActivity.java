@@ -286,8 +286,8 @@ public class MainActivity extends Activity
             appendlnToLog("Logged in");
             if (v == null) {
                 actualConnect();
-                return;
             }
+            return;
         }
         webView.setVisibility(View.VISIBLE);
         webView.loadUrl("https://discord.com/login");
