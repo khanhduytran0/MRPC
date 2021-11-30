@@ -36,7 +36,7 @@ public class MainActivity extends Activity
 {
     private SharedPreferences pref;
 
-    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
 
     private Runnable heartbeatRunnable;
     private WebSocketClient webSocketClient;
@@ -117,6 +117,8 @@ public class MainActivity extends Activity
      */
 
     public void sendPresenceUpdate(View v) {
+        long current = System.currentTimeMillis();
+
         ArrayMap<String, Object> presence = new ArrayMap<>();
 
         if (editActivityName.getText().toString().isEmpty()) {
@@ -127,14 +129,14 @@ public class MainActivity extends Activity
             activity.put("type", 0);
 
             ArrayMap<String, Object> timestamps = new ArrayMap<>();
-            timestamps.put("start", System.currentTimeMillis());
+            timestamps.put("start", current);
 
             activity.put("timestamps", timestamps);
             presence.put("activities", new Object[]{activity});
         }
 
         presence.put("afk", true);
-        presence.put("since", 0);
+        presence.put("since", current);
         presence.put("status", "online");
 
         ArrayMap<String, Object> arr = new ArrayMap<>();
