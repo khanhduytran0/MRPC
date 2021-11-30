@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="match_parent"
+	android:layout_width="match_parent">
+
+	<Button
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:text="Login"
+		android:onClick="login"
+		android:id="@+id/buttonLogin"/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:layout_below="@id/buttonLogin">
+
+		<Button
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:text="Connect"
+			android:onClick="connect"
+			android:id="@+id/buttonConnect"/>
+
+		<EditText
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:hint="Activity name (leave empty to unset)"
+			android:id="@+id/editActivityName"/>
+
+		<Button
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:text="Set activity"
+			android:onClick="sendPresenceUpdate"
+			android:id="@+id/buttonSetActivity"/>
+
+		<ScrollView
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:hint="Log output"
+				android:id="@+id/textviewLog"
+				android:typeface="monospace"/>
+
+		</ScrollView>
+
+	</LinearLayout>
+
+	<WebView
+		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		android:visibility="gone"
+		android:id="@+id/mainWebView"
+		android:layout_gravity="bottom"
+		android:layout_below="@id/buttonLogin"/>
+
+</RelativeLayout>
+
