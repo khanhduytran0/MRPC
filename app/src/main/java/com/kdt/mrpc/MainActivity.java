@@ -27,6 +27,7 @@ import java.nio.ByteBuffer;
 import java.util.Map;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
+import javax.net.ssl.SSLParameters;
 
 public class MainActivity extends Activity 
 {
@@ -95,7 +96,6 @@ public class MainActivity extends Activity
         editActivityState = (EditText) findViewById(R.id.editActivityState);
         editActivityDetails = (EditText) findViewById(R.id.editActivityDetails);
         imageIcon = (ImageButton) findViewById(R.id.imageIcon);
-        heartbeatThr = new Thread(heartbeatRunnable);
     }
     /*
      @Override
@@ -126,8 +126,12 @@ public class MainActivity extends Activity
         } else {
             ArrayMap<String, Object> activity = new ArrayMap<>();
             activity.put("name", editActivityName.getText().toString());
-            activity.put("state", editActivityState.getText().toString());
-            activity.put("details", editActivityDetails.getText().toString());
+            if (!editActivityState.getText().toString().isEmpty()) {
+                activity.put("state", editActivityState.getText().toString());
+            }
+            if (!editActivityDetails.getText().toString().isEmpty()) {
+                activity.put("details", editActivityDetails.getText().toString());
+            }
             activity.put("type", 0);
             
             // activity.put("application_id", "567994086452363286");
@@ -145,7 +149,7 @@ public class MainActivity extends Activity
 
         presence.put("afk", true);
         presence.put("since", current);
-        presence.put("status", "online");
+        presence.put("status", null);
 
         ArrayMap<String, Object> arr = new ArrayMap<>();
         arr.put("op", 3);
@@ -233,6 +237,7 @@ public class MainActivity extends Activity
                     case 10: // Hello
                         Map data = (Map) map.get("d");
                         heartbeat_interval = ((Double)data.get("heartbeat_interval")).intValue();
+                        heartbeatThr = new Thread(heartbeatRunnable);
                         heartbeatThr.start();
                         sendIdentify();
                         break;
@@ -257,6 +262,9 @@ public class MainActivity extends Activity
             @Override
             public void onClose(int code, String reason, boolean remote) {
                 appendlnToLog("Connection closed with exit code " + code + " additional info: " + reason + "\n");
+                if (!heartbeatThr.interrupted()) {
+                    heartbeatThr.interrupt();
+                }
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -271,6 +279,15 @@ public class MainActivity extends Activity
             public void onError(Exception e) {
                 if (!e.getMessage().equals("Interrupt")) {
                     appendlnToLog(Log.getStackTraceString(e));
+                }
+            }
+
+            @Override
+            protected void onSetSSLParameters(SSLParameters p) {
+                try {
+                    super.onSetSSLParameters(p);
+                } catch (Throwable th) {
+                    th.printStackTrace();
                 }
             }
         };
