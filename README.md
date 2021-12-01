@@ -18,4 +18,4 @@ It's pretty simple.
 ## Third party libraries and their licenses
 - [gson](https://github.com/google/gson): [Apache License 2.0](https://github.com/google/gson/blob/master/LICENSE).
 - [Java-WebSocket](https://github.com/TooTallNate/Java-WebSocket): [MIT License](https://github.com/TooTallNate/Java-WebSocket/blob/master/LICENSE).
-Note that an old version (1.3.9) is used instead of latest due to the dependence of slf4j. I will update it later.
+- [slf4j-android](https://github.com/twwwt/slf4j): [MIT License](https://github.com/twwwt/slf4j/blob/master/LICENSE.txt).
